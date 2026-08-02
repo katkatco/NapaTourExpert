@@ -1,1 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Custom Napa Valley wine tours with local expertise, personalized itineraries, and VIP treatment." />
+  <title>Napa Tour Expert | Luxury Wine Tours</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --wine: #6f2338;
+      --wine-dark: #431522;
+      --cream: #f5efe5;
+      --cream-deep: #e8dccb;
+      --green: #183d30;
+      --gold: #c7a061;
+      --ink: #26231f;
+      --muted: #6d675f;
+      --white: #fff;
+      --shadow: 0 24px 70px rgba(29, 20, 14, 0.18);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Montserrat", sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+
+    .container {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: .76rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    h1, h2, h3 {
+      font-family: "Cormorant Garamond", serif;
+      line-height: 1.02;
+      font-weight: 600;
+    }
+
+    h2 {
+      font-size: clamp(2.5rem, 5vw, 4.7rem);
+      color: var(--wine-dark);
+    }
+
+    p { color: var(--muted); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 28px;
+      border: 1px solid var(--gold);
+      background: var(--gold);
+      color: var(--wine-dark);
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      font-size: .76rem;
+      font-weight: 600;
+      transition: .25s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); background: #d8b779; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,.75);
+    }
+
+    .btn-outline:hover { background: var(--white); color: var(--wine-dark); }
+
+    /* NAV */
+    .nav {
+      position: absolute;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-bottom: 1px solid rgba(255,255,255,.22);
+    }
+
+    .nav-inner {
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      color: var(--white);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.65rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--gold);
+      font-family: "Montserrat", sans-serif;
+      font-size: .54rem;
+      letter-spacing: .34em;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,.94);
+      font-size: .74rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .menu {
+      display: none;
+      background: transparent;
+      border: 0;
+      color: var(--white);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(38,15,22,.88) 0%, rgba(38,15,22,.68) 45%, rgba(38,15,22,.18) 100%),
+        url("https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=2200&q=90") center/cover;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 140px;
+      background: linear-gradient(to top, var(--cream), transparent);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 56px;
+      align-items: center;
+      padding: 145px 0 100px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(4.3rem, 8vw, 8rem);
+      max-width: 780px;
+      letter-spacing: -.035em;
+      margin-bottom: 24px;
+    }
+
+    .hero-copy p {
+      color: rgba(255,255,255,.9);
+      max-width: 640px;
+      font-size: clamp(1rem, 1.8vw, 1.14rem);
+      margin-bottom: 32px;
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+    .hero-portrait {
+      justify-self: end;
+      width: min(420px, 100%);
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.32);
+      padding: 12px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.25);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-portrait img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .portrait-note {
+      padding: 18px 10px 8px;
+      text-align: center;
+      color: rgba(255,255,255,.9);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.35rem;
+      font-style: italic;
+    }
+
+    /* INTRO */
+    .intro { padding: 120px 0; }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .intro-image {
+      min-height: 620px;
+      background: url("https://images.unsplash.com/photo-1473973266408-ed4e27abdd47?auto=format&fit=crop&w=1400&q=85") center/cover;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .intro-image::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border: 1px solid rgba(255,255,255,.55);
+    }
+
+    .intro-copy h2 { margin-bottom: 24px; }
+    .intro-copy p { margin-bottom: 18px; }
+
+    .signature {
+      margin-top: 28px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.1rem;
+      font-style: italic;
+      color: var(--wine);
+    }
+
+    /* SERVICES */
+    .services {
+      padding: 120px 0;
+      background: var(--white);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin: 0 auto 58px;
+      text-align: center;
+    }
+
+    .section-head p { margin-top: 18px; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      min-height: 430px;
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .card:nth-child(1) {
+      background: linear-gradient(to top, rgba(39,16,22,.88), rgba(39,16,22,.08)),
+      url("https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1100&q=85") center/cover;
+    }
+
+    .card:nth-child(2) {
+      background: linear-gradient(to top, rgba(39,16,22,.88), rgba(39,16,22,.08)),
+      url("https://images.unsplash.com/photo-1504279577054-acfeccf8fc52?auto=format&fit=crop&w=1100&q=85") center/cover;
+    }
+
+    .card:nth-child(3) {
+      background: linear-gradient(to top, rgba(39,16,22,.88), rgba(39,16,22,.08)),
+      url("https://images.unsplash.com/photo-1558346648-9757f2fa4474?auto=format&fit=crop&w=1100&q=85") center/cover;
+    }
+
+    .card-content {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 28px;
+    }
+
+    .card h3 {
+      font-size: 2.35rem;
+      margin-bottom: 10px;
+    }
+
+    .card p { color: rgba(255,255,255,.86); }
+
+    /* WHY */
+    .why {
+      padding: 120px 0;
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .why h2 { color: var(--white); }
+
+    .why-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .why-item {
+      border-top: 1px solid rgba(255,255,255,.26);
+      padding-top: 20px;
+    }
+
+    .why-item strong {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .why-item p { color: rgba(255,255,255,.76); }
+
+    /* TESTIMONIAL */
+    .testimonial {
+      padding: 115px 0;
+      text-align: center;
+      background: var(--cream-deep);
+    }
+
+    .quote {
+      max-width: 900px;
+      margin: 0 auto;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 1.15;
+      color: var(--wine-dark);
+    }
+
+    .quote-author {
+      margin-top: 24px;
+      color: var(--wine);
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* CTA + CONTACT */
+    .contact {
+      padding: 120px 0;
+      background: var(--wine-dark);
+      color: var(--white);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .contact h2 { color: var(--white); margin-bottom: 24px; }
+    .contact p { color: rgba(255,255,255,.78); }
+
+    .contact-details {
+      margin-top: 28px;
+      display: grid;
+      gap: 10px;
+      color: var(--white);
+    }
+
+    .form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.06);
+      color: var(--white);
+      padding: 16px 17px;
+      outline: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,.58); }
+    input:focus, textarea:focus { border-color: var(--gold); }
+    textarea { min-height: 150px; resize: vertical; }
+
+    .form-note {
+      font-size: .75rem;
+      color: rgba(255,255,255,.55);
+    }
+
+    footer {
+      background: #2c0d16;
+      color: rgba(255,255,255,.66);
+      padding: 28px 0;
+      text-align: center;
+      font-size: .78rem;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .menu { display: block; }
+
+      .nav.open .nav-links {
+        display: flex;
+        position: absolute;
+        top: 92px;
+        left: 20px;
+        right: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        background: rgba(37,14,21,.97);
+        padding: 24px;
+        gap: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-grid,
+      .intro-grid,
+      .why-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-portrait {
+        justify-self: start;
+        max-width: 390px;
+      }
+
+      .hero-portrait img { height: 500px; }
+
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: 390px; }
+      .why-list { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .container { width: min(100% - 28px, 1160px); }
+      .nav-inner { min-height: 80px; }
+      .brand { font-size: 1.25rem; }
+      .hero-grid { padding-top: 125px; }
+      .hero-copy h1 { font-size: clamp(3.4rem, 17vw, 5.6rem); }
+      .hero-portrait img { height: 430px; }
+      .intro, .services, .why, .testimonial, .contact { padding: 86px 0; }
+      .intro-image { min-height: 470px; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#home">
+        Napa Tour Expert
+        <span>Wine Country Experiences</span>
+      </a>
+
+      <button class="menu" id="menu" aria-label="Open navigation">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#tours">Tours</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Luxury Wine Tours</div>
+          <h1>Your Napa Valley Experience Begins Here.</h1>
+          <p>
+            Safe rides, local expertise, and VIP treatment—because your time in Wine Country
+            should be unforgettable.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#contact">Get a Quote</a>
+            <a class="btn btn-outline" href="#tours">Explore Tours</a>
+          </div>
+        </div>
+
+        <aside class="hero-portrait">
+          <!-- Replace this image later with Kathy's real photo file, for example: src="kathy.jpg" -->
+          <img
+            src="https://images.unsplash.com/photo-1547595628-c61a29f496f0?auto=format&fit=crop&w=1000&q=85"
+            alt="Wine Country host holding a glass of wine"
+          />
+          <div class="portrait-note">Your local guide to an unforgettable day.</div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="intro" id="about">
+      <div class="container intro-grid">
+        <div class="intro-image" aria-label="Napa Valley vineyard"></div>
+
+        <div class="intro-copy">
+          <div class="eyebrow">Welcome to Wine Country</div>
+          <h2>A Beautiful Day, Designed Around You.</h2>
+          <p>
+            Napa Tour Expert creates personalized experiences throughout Napa Valley,
+            Sonoma, Calistoga, St. Helena, Healdsburg, and beyond.
+          </p>
+          <p>
+            From celebrated wineries to tucked-away local favorites, every itinerary is
+            thoughtfully planned around your tastes, pace, and occasion.
+          </p>
+          <p>
+            You relax, enjoy the scenery, and savor the day. We take care of the details.
+          </p>
+          <div class="signature">Hosted with warmth, knowledge, and care.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="tours">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Our Experiences</div>
+          <h2>Wine Country, Your Way.</h2>
+          <p>
+            Every tour is customized for your group, whether you're celebrating something
+            special or simply ready to discover the best of Napa and Sonoma.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-content">
+              <h3>Custom Wine Tours</h3>
+              <p>Thoughtfully planned winery visits built around your preferences.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-content">
+              <h3>Celebrations</h3>
+              <p>Birthdays, anniversaries, bachelorette weekends, and unforgettable milestones.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-content">
+              <h3>Local Favorites</h3>
+              <p>Discover hidden gems, iconic estates, and exceptional Wine Country hospitality.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="why" id="why">
+      <div class="container why-grid">
+        <div>
+          <div class="eyebrow">Why Napa Tour Expert</div>
+          <h2>Personal Service Makes All the Difference.</h2>
+        </div>
+
+        <div class="why-list">
+          <div class="why-item">
+            <strong>Local Knowledge</strong>
+            <p>Insider recommendations and thoughtful guidance throughout your day.</p>
+          </div>
+          <div class="why-item">
+            <strong>Custom Itineraries</strong>
+            <p>No cookie-cutter schedules. Your tour reflects your group and your style.</p>
+          </div>
+          <div class="why-item">
+            <strong>Stress-Free Planning</strong>
+            <p>We help organize the details so you can focus on enjoying Wine Country.</p>
+          </div>
+          <div class="why-item">
+            <strong>Warm Hospitality</strong>
+            <p>Professional, welcoming service without the stiff luxury attitude.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonial" id="reviews">
+      <div class="container">
+        <div class="eyebrow">Guest Experience</div>
+        <p class="quote">
+          “The perfect Wine Country day—beautiful wineries, wonderful recommendations,
+          and every detail handled with care.”
+        </p>
+        <div class="quote-author">A Napa Tour Expert Guest</div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <div class="eyebrow">Plan Your Day</div>
+          <h2>Ready to Experience Wine Country?</h2>
+          <p>
+            Tell us about your group, preferred date, and the kind of experience you have
+            in mind. We'll help you begin planning a memorable day.
+          </p>
+
+          <div class="contact-details">
+            <span><strong>Phone:</strong> Add your phone number</span>
+            <span><strong>Email:</strong> Add your email address</span>
+            <span><strong>Serving:</strong> Napa Valley, Sonoma, and surrounding Wine Country</span>
+          </div>
+        </div>
+
+        <form class="form" action="mailto:YOUR-EMAIL-HERE" method="post" enctype="text/plain">
+          <div class="form-row">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="email" name="email" placeholder="Email address" required>
+          </div>
+
+          <div class="form-row">
+            <input type="tel" name="phone" placeholder="Phone number">
+            <input type="text" name="date" placeholder="Preferred tour date">
+          </div>
+
+          <textarea name="message" placeholder="Tell us about your group and the experience you would love."></textarea>
+
+          <button class="btn" type="submit">Request a Quote</button>
+          <div class="form-note">
+            Replace YOUR-EMAIL-HERE in the code with the email address that should receive inquiries.
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Napa Tour Expert. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menu");
+    const nav = document.getElementById("nav");
+
+    menuButton.addEventListener("click", () => {
+      nav.classList.toggle("open");
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => nav.classList.remove("open"));
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
